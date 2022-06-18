@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //SRP - Single Responsibility Principle - Yagona javobgarlik prinsipi
+/** Sinfni o'zgartirish uchun faqat bitta sabab bo'lishi kerak, ya'ni sinfda faqat bitta (bir xil turdagi) vazifa bo'lishi kerak. **/
 public class SRP {
     public static void main(String[] args) {
         Notepad notepad=new Notepad();

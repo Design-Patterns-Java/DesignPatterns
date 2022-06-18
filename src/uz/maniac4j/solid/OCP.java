@@ -3,7 +3,8 @@ package uz.maniac4j.solid;
 import java.util.List;
 import java.util.stream.Collectors;
 
-//OCP
+//OCP - Open-Closed principle
+/** Dasturiy ta’minot obyektlari (sinflar, funksiyalar, metodlar, modullar va boshqalar) kengaytirish uchun ochiq, o’zgartirish uchun yopiq bo’lishi kerak. **/
 
 //1. Bitta xususiyat bo'yicha filter
 //2. 2 ta xususiyat bo'yicha filter
