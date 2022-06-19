@@ -1,7 +1,5 @@
 package uz.maniac4j.solid;
 
-import org.javatuples.Triplet;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +35,41 @@ class Person {
         this.name = name;
     }
 }
+class Test<A,B,C> {
+    private A a;
+    private B b;
+    private C c;
+
+    public Test(A a, B b, C c) {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public A getA() {
+        return a;
+    }
+
+    public void setA(A a) {
+        this.a = a;
+    }
+
+    public B getB() {
+        return b;
+    }
+
+    public void setB(B b) {
+        this.b = b;
+    }
+
+    public C getC() {
+        return c;
+    }
+
+    public void setC(C c) {
+        this.c = c;
+    }
+}
 
 interface RelationshipBrowser {
     List<Person> findAllChildrenOf(String name);
@@ -46,23 +79,23 @@ class Relationships implements RelationshipBrowser {
     public List<Person> findAllChildrenOf(String name) {
 
         return relations.stream()
-                .filter(x -> Objects.equals(x.getValue0().name, name)
-                        && x.getValue1() == Relationship.PARENT)
-                .map(Triplet::getValue2)
+                .filter(x -> Objects.equals(x.getA().name, name)
+                        && x.getB() == Relationship.PARENT)
+                .map(Test::getC)
                 .collect(Collectors.toList());
     }
 
-    // Triplet class requires javatuples
-    private List<Triplet<Person, Relationship, Person>> relations =
+    // Test class requires javatuples
+    private List<Test<Person, Relationship, Person>> relations =
             new ArrayList<>();
 
-    public List<Triplet<Person, Relationship, Person>> getRelations() {
+    public List<Test<Person, Relationship, Person>> getRelations() {
         return relations;
     }
 
     public void addParentAndChild(Person parent, Person child) {
-        relations.add(new Triplet<>(parent, Relationship.PARENT, child));
-        relations.add(new Triplet<>(child, Relationship.CHILD, parent));
+        relations.add(new Test<>(parent, Relationship.PARENT, child));
+        relations.add(new Test<>(child, Relationship.CHILD, parent));
     }
 }
 
@@ -71,11 +104,11 @@ class Research
     public Research(Relationships relationships,String name)
     {
         // high-level: find all of john's children
-        List<Triplet<Person, Relationship, Person>> relations = relationships.getRelations();
+        List<Test<Person, Relationship, Person>> relations = relationships.getRelations();
         relations.stream()
-                .filter(x -> x.getValue0().name.equals(name)
-                        && x.getValue1() == Relationship.PARENT)
-                .forEach(ch -> System.out.println(name+" has a child called " + ch.getValue2().name));
+                .filter(x -> x.getA().name.equals(name)
+                        && x.getB() == Relationship.PARENT)
+                .forEach(ch -> System.out.println(name+" has a child called " + ch.getC().name));
     }
 
     public Research(RelationshipBrowser browser,String name)
@@ -85,3 +118,6 @@ class Research
             System.out.println(name+" has a child called " + child.name);
     }
 }
+
+
+
